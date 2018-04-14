@@ -42,7 +42,18 @@ var resetButton, musicButton;
      myImage = loadImage("assets/img/image.png");
    }
  */
-
+function loadImages() {
+  backImage = loadImage("assets/img/back.png");
+  boltImage = loadImage("assets/img/bolt.png");
+  cloudImage = loadImage("assets/img/cloud.png"):
+  sunImage = loadImage("assets/img/sun.png");
+  moonImage = loadImage("assets/img/moon.png");
+  smileyImage = loadImage("assets/img/smiley.png");
+  heartImage = loadImage("assets/img/heart.png");
+  transitionImage1 = loadImage("assets/img/tramsition1.png");
+  transitionImage2 = loadImage("assets/img/tramsition2.png");
+  transitionImage3 = loadImage("assets/img/tramsition3.png");
+}
 
 /*
  * function loadAnimations()
@@ -56,7 +67,15 @@ var resetButton, musicButton;
    }
  */
 
+function loadAnimations() {
+  boltAnimation = loadAnimation(backImage, tramsitionImage1, transitionImage2, transitionImage3, boltImage );
+  boltAnimation = loadAnimation(backImage, tramsitionImage1, transitionImage2, transitionImage3, cloudImage );
+  boltAnimation = loadAnimation(backImage, tramsitionImage1, transitionImage2, transitionImage3, sunImage );
+  boltAnimation = loadAnimation(backImage, tramsitionImage1, transitionImage2, transitionImage3, moonImage );
+  boltAnimation = loadAnimation(backImage, tramsitionImage1, transitionImage2, transitionImage3, smileyImage );
+  boltAnimation = loadAnimation(backImage, tramsitionImage1, transitionImage2, transitionImage3, heartImage );
 
+}
 /*
  * function loadSounds()
  * Works very similarly to loadImages(), only for music and sound effects.
@@ -74,9 +93,12 @@ var resetButton, musicButton;
  * Called automatically by p5.play. Loads all assets for your game (e.g.,
  * images, sounds) before p5 calls setup(), to ensure that the game does not
  * begin running until the assets are loaded and ready. Therefore, this function
- * is essentially a "pre-setup" function. 
+ * is essentially a "pre-setup" function.
  */
-
+function preload() {
+  loadImages();
+  loadAnimations();
+}
 
 /*
  * function setup()
@@ -84,7 +106,17 @@ var resetButton, musicButton;
  * Therefore, assets are assumed to have been loaded and ready before this
  * function is called.
  */
-
+function setup() {
+  gameScreen = createCanvas(790, 370);
+  gameScreen.parent("#game-screen");
+  spriteWidth = 120;
+  spriteHeight = 168;
+  spriteX = 70;
+  spriteY = 95;
+  imageArray = [backImage, boltImage, cloudImage, sunImage, moonImage, smileyImage, heartImage,
+                transitionImage1, transitionImage2, transitionImage3];
+    resizeImages();
+}
 
 /*
  * function draw()
@@ -120,7 +152,11 @@ var resetButton, musicButton;
  * Example of resizing one image:
    image.resize(40, 50);
  */
-
+function resizeImages() {
+  for(var i = 0; i < imageArray.length; i++) {
+    imageArray[i],resize(spriteWidth, spriteHeight):
+  }
+}
 
 /*
  * function createSprites()
