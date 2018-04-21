@@ -45,7 +45,7 @@ var resetButton, musicButton;
 function loadImages() {
   backImage = loadImage("assets/img/back.png");
   boltImage = loadImage("assets/img/bolt.png");
-  cloudImage = loadImage("assets/img/cloud.png"):
+  cloudImage = loadImage("assets/img/cloud.png");
   sunImage = loadImage("assets/img/sun.png");
   moonImage = loadImage("assets/img/moon.png");
   smileyImage = loadImage("assets/img/smiley.png");
@@ -68,12 +68,12 @@ function loadImages() {
  */
 
 function loadAnimations() {
-  boltAnimation = loadAnimation(backImage, tramsitionImage1, transitionImage2, transitionImage3, boltImage );
-  boltAnimation = loadAnimation(backImage, tramsitionImage1, transitionImage2, transitionImage3, cloudImage );
-  boltAnimation = loadAnimation(backImage, tramsitionImage1, transitionImage2, transitionImage3, sunImage );
-  boltAnimation = loadAnimation(backImage, tramsitionImage1, transitionImage2, transitionImage3, moonImage );
-  boltAnimation = loadAnimation(backImage, tramsitionImage1, transitionImage2, transitionImage3, smileyImage );
-  boltAnimation = loadAnimation(backImage, tramsitionImage1, transitionImage2, transitionImage3, heartImage );
+  boltAnimation = loadAnimation(backImage, transitionImage1, transitionImage2, transitionImage3, boltImage );
+  cloudAnimation = loadAnimation(backImage, transitionImage1, transitionImage2, transitionImage3, cloudImage );
+  sunAnimation = loadAnimation(backImage, transitionImage1, transitionImage2, transitionImage3, sunImage );
+  moonAnimation = loadAnimation(backImage, transitionImage1, transitionImage2, transitionImage3, moonImage );
+  smileyAnimation = loadAnimation(backImage, transitionImage1, transitionImage2, transitionImage3, smileyImage );
+  heartAnimation = loadAnimation(backImage, transitionImage1,transitionImage2, transitionImage3, transitionImage3, heartImage );
 
 }
 /*
@@ -116,11 +116,23 @@ function setup() {
   imageArray = [backImage, boltImage, cloudImage, sunImage, moonImage, smileyImage, heartImage,
                 transitionImage1, transitionImage2, transitionImage3];
     resizeImages();
+    createSprites();
+    spriteArray = [ boltSprite1, boltSprite2, cloudSprite1, cloudSprite2, sunSprite1, sunSprite2,
+      moonSprite1, moonSprite2, smileySprite1, smileySprite2, heartSprite1, heartSprite2];
+
+      addAnimations();
+      shuffle(SpriteArray, true);
+      placeSprites();
+      spritesActive = true;
 }
 
 /*
  * function draw()
  */
+ function draw() {
+   background(20, 40, 60);
+   drawSprites();
+ }
 
 /*
  * function init()
@@ -154,7 +166,7 @@ function setup() {
  */
 function resizeImages() {
   for(var i = 0; i < imageArray.length; i++) {
-    imageArray[i],resize(spriteWidth, spriteHeight):
+    imageArray[i],resize(spriteWidth, spriteHeight);
   }
 }
 
@@ -171,6 +183,20 @@ function resizeImages() {
    }
  */
 
+function createSprites(){
+  boltSprite1 = createSprite(0, 0, spriteWidth,spriteHeight);
+  boltSprite2 = createSprite(0, 0, spriteWidth,spriteHeight);
+  cloudSprite1 = createSprite(0, 0, spriteWidth,spriteHeight);
+  cloudSprite2 = createSprite(0, 0, spriteWidth,spriteHeight);
+  sunSprite1 = createSprite(0, 0, spriteWidth,spriteHeight);
+  sunSprite2 = createSprite(0, 0, spriteWidth,spriteHeight);
+  moonSprite1 = createSprite(0, 0, spriteWidth,spriteHeight);
+  moonSprite2 = createSprite(0, 0, spriteWidth,spriteHeight);
+  smileySprite1 = createSprite(0, 0, spriteWidth,spriteHeight);
+  smileySprite2 = createSprite(0, 0, spriteWidth,spriteHeight);
+  heartSprite1 = createSprite(0, 0, spriteWidth,spriteHeight);
+  heartSprite2 = createSprite(0, 0, spriteWidth,spriteHeight);
+}
 
 /*
  * function addAnimations()
@@ -182,13 +208,38 @@ function resizeImages() {
  */
 
 
+function addAnimations() {
+  var animations = [boltAnimation, boltAnimation, cloudAnimation, cloudAnimation, sunAnimation, sunAnimation,
+    moonAnimation, moonAnimation, smileyAnimation, smileyAnimation, heartAnimation, heartAnimation];
+
+    for(var i = 0; i < spriteArray.length; i++){
+      spriteArray[i].addAnimation("flip", animations[i]);
+      spriteArray[i].animation.frameDelay = 10;
+      spriteArray[i].animation.looping = false;
+      spriteArray[i].animation.playing = false;
+    }
+}
+
+
 /*
  * function placeSprites()
  * Places all sprites in spriteArray on the game screen, according to any
  * pattern you like. For starters, try arranging the sprites in a simple
  * grid-like pattern (e.g., 2x2 if you only have four sprites).
  */
-
+function placeSprites() {
+  for(var i = 0; i < spritearray.length; i++) {
+    spriteArray[i].position.x = spriteX;
+    spriteArray[i].position.y = spriteY;
+    if((i + 1) % 6 === 0) { //if the number of sprites is divisible by 6
+      spriteX = 70;
+      spriteY += spriteHeight ;
+    }
+    else {
+      spriteX += spriteWidth + 10;
+    }
+  }
+}
 
 /*
  * function activateSprite(s)
